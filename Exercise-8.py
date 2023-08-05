@@ -1,0 +1,5 @@
+t = (3, 4, 5, 6, 7, 19, 70, "good", "bad", 89.76)
+length = len(t)
+print ("The given tuples is : ", t)
+print ("First half tuples values are : ", t[:length//2])
+print ("Second half tuples values are : ", t[length//2:])
