@@ -1,3 +1,4 @@
+# Print prime number given range
 s = int(input("Enter starting value : "))
 e = int(input("Enter ending value : "))
 s = 2 if s == 1 else s
