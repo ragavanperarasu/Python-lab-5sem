@@ -1,0 +1,49 @@
+# Candidate Elimination Algorithm
+
+def candidate_elimination(concepts, target):
+    # Initialize S and G
+    specific_hypothesis = concepts[0].copy()
+    general_hypothesis = [["?" for _ in range(len(specific_hypothesis))]
+                          for _ in range(len(specific_hypothesis))]
+
+    print("Initial Specific Hypothesis:", specific_hypothesis)
+    print("Initial General Hypothesis:", general_hypothesis)
+
+    for i, h in enumerate(concepts):
+        if target[i] == "Yes":
+            for x in range(len(specific_hypothesis)):
+                if h[x] != specific_hypothesis[x]:
+                    specific_hypothesis[x] = "?"
+                    general_hypothesis[x][x] = "?"
+        else:  # target == "No"
+            for x in range(len(specific_hypothesis)):
+                if h[x] != specific_hypothesis[x]:
+                    general_hypothesis[x][x] = specific_hypothesis[x]
+                else:
+                    general_hypothesis[x][x] = "?"
+
+        print(f"\nAfter example {i+1}")
+        print("Specific Hypothesis:", specific_hypothesis)
+        print("General Hypothesis:", general_hypothesis)
+
+    # Remove overly general hypotheses
+    general_hypothesis = [g for g in general_hypothesis if g != ["?"] * len(specific_hypothesis)]
+
+    return specific_hypothesis, general_hypothesis
+
+
+# Training data
+concepts = [
+    ["Sunny", "Warm", "Normal", "Strong", "Warm", "Same"],
+    ["Sunny", "Warm", "High", "Strong", "Warm", "Same"],
+    ["Rainy", "Cold", "High", "Strong", "Warm", "Change"],
+    ["Sunny", "Warm", "High", "Strong", "Cool", "Change"]
+]
+
+target = ["Yes", "Yes", "No", "Yes"]
+
+# Run algorithm
+S, G = candidate_elimination(concepts, target)
+
+print("\nFinal Specific Hypothesis:", S)
+print("Final General Hypothesis:", G)
